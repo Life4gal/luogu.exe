@@ -1,8 +1,10 @@
+#include <iostream>
+
 #include "include.hpp"
 
 int main()
 {
-	P1000();
+	P1002();
 
 	return 0;
 }
