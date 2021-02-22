@@ -11,17 +11,10 @@ auto calc_sum(std::vector<int>&& vec)
 	vec.insert(vec.begin(), 0);
 	vec.push_back(0);
 
-	std::vector<std::vector<AnsType>> field;
-	field.reserve(extent_size);
-	for(int i = 0; i < extent_size; ++i)
+	std::vector<std::vector<AnsType>> field{extent_size};
+	for(auto& v : field)
 	{
-		std::vector<AnsType> v;
-		v.reserve(extent_size);
-		for(int j = 0; j < extent_size; ++j)
-		{
-			v.push_back(0);
-		}
-		field.push_back(std::move(v));
+		v.resize(extent_size);
 	}
 
 	for(int i = 0; i <= size; ++i)
