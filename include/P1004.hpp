@@ -1,13 +1,5 @@
 #include <iostream>
-
-template<typename T, typename U, typename... More>
-auto max(T&& t, U&& u, More&&... more) {
-	if constexpr (sizeof...(more) == 0) {
-		return t > u ? t : u;
-	} else {
-		return max(max(t, u), more...);
-	}
-}
+#include <support.hpp>
 
 int P1004() {
 	int field[12][12]{};
