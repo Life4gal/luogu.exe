@@ -11,7 +11,7 @@ auto calc_sum(std::vector<int>&& vec)
 	vec.insert(vec.begin(), 0);
 	vec.push_back(0);
 
-	std::vector<std::vector<AnsType>> field{extent_size};
+	std::vector<std::vector<AnsType>> field{static_cast<size_t>(extent_size)};
 	for(auto& v : field)
 	{
 		v.resize(extent_size);
