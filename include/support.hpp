@@ -46,4 +46,45 @@ operator<<( std::ostream& dest, __int128_t value )
 	return dest;
 }
 
+template<typename InputIterator1, typename InputIterator2>
+constexpr bool lexicographical_equal(InputIterator1 begin1, InputIterator1 end1, InputIterator2 begin2, InputIterator2 end2)
+{
+	for(; (begin1 != end1) && (begin2 != end2); ++begin1, ++begin2)
+	{
+		if(*begin1 != *begin2) return false;
+	}
+
+	return (begin1 == end1) && (begin2 == end2);
+}
+
+template<typename DestInputIterator, typename SourceInputIterator>
+constexpr void add(int base, DestInputIterator dest, SourceInputIterator begin, SourceInputIterator end)
+{
+	constexpr auto c2d = [](char c)
+	{
+		if(c >= '0' && c <= '9') return c - '0';
+		else if(c >= 'a' && c <= 'z') return c - 'a' + 10;
+		else if(c >= 'A' && c <= 'Z') return c - 'A' + 10;
+		return 0;
+	};
+
+	constexpr auto d2c = [](int d)
+	{
+		if(d >= 0 && d <= 9) return d + '0';
+		else if(d >= 10 && d <= 16) return d - 10 + 'A';
+		else return 0;
+	};
+
+	for(int total_carry = 0, times = 0; ; ++times, ++begin, ++dest)
+	{
+		int dest_num = c2d(*dest);
+		dest_num += ((begin != end) ? c2d(*begin) : 0) + total_carry;
+		total_carry = dest_num / base;
+		dest_num %= base;
+		*dest = d2c(dest_num);
+
+		if(total_carry == 0 && begin == end) return;
+	}
+}
+
 #endif
