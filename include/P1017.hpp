@@ -6,18 +6,17 @@ int P1017()
 	/*
 	 * calc result from back to front
 	 * if the base is negative number, the remainder maybe less than 0
-	 * | remainder | (<-- it is abs(remainder)) must less than | base | (<-- it is abs(base))
-	 * so (remainder - base) must be greater than 0
 	 *
 	 * n = -15, base = -2:
 	 *      n % base --> -15 % -2 = -1 --> remainder
 	 *      n / base --> -15 / -2 = 7  --> quotient
 	 *      base * quotient + remainder --> 7 * -2 + -1 = -15 = n
 	 *
-	 *      (quotient + 1) * base + (remainder - base)
-	 *      --> quotient * base + base + remainder - base
-	 *      --> quotient * base + remainder
-	 *      --> n
+	 * | remainder | (<-- it is abs(remainder)) must less than | base | (<-- it is abs(base))
+	 * so (remainder - base) must be greater than 0
+	 *
+	 *      base * quotient + remainder
+	 *      --> (base * quotient + base) + (remainder - base)
 	 */
 
 	int n;
@@ -26,9 +25,9 @@ int P1017()
 	std::cin >> n >> base;
 
 	// we need recursive call this function, so it can not be a lambda but a wrapped function
-	std::function<void(int, int)> calc;
+	std::function<void(int)> calc;
 
-	calc = [&calc](int n, int base) -> void
+	calc = [&calc, base](int n) -> void
 	{
 		if(n == 0) return;
 
@@ -42,7 +41,7 @@ int P1017()
 
 		if(remainder >= 10)
 		{
-			remainder = remainder - 10 + 'A';
+			remainder += -10 + 'A';
 		}
 		else
 		{
@@ -50,13 +49,13 @@ int P1017()
 		}
 
 		// from back to front
-		calc(n / base, base);
+		calc(n / base);
 
 		std::cout.put(remainder);
 	};
 
 	std::cout << n << '=';
-	calc(n, base);
+	calc(n);
 
 	std::cout << "(base" << base << ')' << std::endl;
 
