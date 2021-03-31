@@ -28,21 +28,21 @@ int P1002() {
 	point horse{};
 	std::cin >> bound.x >> bound.y >> horse.x >> horse.y;
 
-	constexpr auto size = 22;
-	long path[size][size] = {};
-	bool danger[size][size] = {};
+	constexpr auto size = 23;
+	long path[size][size]{};
+	bool danger[size][size]{};
 
-	bound.operator++(1);
-	horse.operator++(1);
+	bound.operator++(2);
+	horse.operator++(2);
 
 	for (const auto& [x, y]: danger_point) {
 		danger[horse.x + x][horse.y + y] = true;
 	}
 
-	path[0][1] = 1;
-	// or path[1][0] = 1; just let p[1][1] is not 0 (let it is 1)
-	for (auto i = 1; i <= bound.x; ++i) {
-		for (int j = 1; j <= bound.y; ++j) {
+	// the same as path[2][1] = 1; it just let path[2][2] = 1
+	path[1][2] = 1;
+	for (auto i = 2; i < bound.x + 1; ++i) {
+		for (auto j = 2; j < bound.y + 1; ++j) {
 			path[i][j] = (path[i - 1][j] + path[i][j - 1]) * (!danger[i][j]);
 		}
 	}
