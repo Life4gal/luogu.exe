@@ -34,11 +34,13 @@ int P1002() {
 
 	bound.operator++(1);
 	horse.operator++(1);
-	path[0][1] = 1;
 
 	for (const auto& [x, y]: danger_point) {
 		danger[horse.x + x][horse.y + y] = true;
 	}
+
+	path[0][1] = 1;
+	// or path[1][0] = 1; just let p[1][1] is not 0 (let it is 1)
 	for (auto i = 1; i <= bound.x; ++i) {
 		for (int j = 1; j <= bound.y; ++j) {
 			path[i][j] = (path[i - 1][j] + path[i][j - 1]) * (!danger[i][j]);
